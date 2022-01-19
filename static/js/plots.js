@@ -18,7 +18,7 @@ function DrawBarchart(sampleId){
 
     console.log(`Drawbarchart(${sampleId})`);
 
-    //define function here
+   //reading in JSON data, verifying data in console
     d3.json("samples.json"). then(data=>{
         console.log(data);
 
@@ -54,8 +54,14 @@ function DrawBarchart(sampleId){
 
         let barLayout={
 
-            title:"Top 10 Bacteria Cultures Found",
-            margin:{t:30,l:150}
+            title:"Top 10 Bacterial Cultures Found",
+            yaxis: {
+                title: 'OTU Number',
+            
+                },
+                
+            xaxis: {title: 'Sequencing read numbers'},   
+            margin:{t:50,l:150}
 
         }
 
@@ -68,12 +74,95 @@ function DrawBarchart(sampleId){
 
 function DrawBubbleChart(sampleId){
 
+
+    //same procedure as bar chart for pulling out data
     console.log(`DrawBubblechart (${sampleId})`);
+    d3.json("samples.json"). then(data=>{
+        console.log(data);
+
+    let samples=data.samples;
+    let resultsArray=samples.filter(s=>s.id===sampleId);
+    let result=resultsArray[0];
+
+    //no slicing needed as we want to plot all the data not just top 10
+    let otu_ids=result.otu_ids;
+    let otu_labels=result.otu_labels;
+    let sample_values=result.sample_values;
+
+    let BubbleData={
+        x:otu_ids,
+        y:sample_values,
+        text:otu_labels,
+        mode: "markers",
+            marker: {
+                color: otu_ids,
+                size: sample_values,
+                colorscale: "YlGnBu",
+                type:'heatmap'
+            },
+    };
+
+    let bubbleLayout = {
+        title: "Sequencing reads per OTU per Test Subject Individual",
+        margin: { t:0 },
+        hovermode: "closest",
+        xaxis: { title: "OTU ID (operational taxonomic units ID)" },
+        yaxis: { title: "Sequencing read numbers", range: sample_values.length},
+        margin: { t:100 },
+        height: 400,
+        width: 1200
+    }
+
+
+    let bubbleArray=[BubbleData];
+
+    Plotly.newPlot("bubble", bubbleArray,bubbleLayout);
+    });
 }
+
+
+
 
 function showMetadata(sampleId){
 
     console.log(`showMetadata(${sampleId})`);
+    
+    
+
+    //pulling in sample data
+    d3.json("samples.json").then(data => {
+
+       
+
+    
+
+    let metaData=data.metadata;
+
+    console.log (metaData);
+
+
+    let resultArray=metaData.filter(s=>s.id===parseInt(sampleId));
+    let result= resultArray[0];
+
+    //creating array with key value pairs
+    let metaArray= Object.entries(result);
+    
+    console.log('Meta array is:');
+    console.log(metaArray);
+
+    
+
+
+    //getting handle of sample-metadata id in HTML div to add values from array
+    let selector = d3.select("#sample-metadata");
+    selector.html("");
+        metaArray.forEach(([key,value]) => {
+        uppercaseKey = key.toUpperCase();
+        selector.append("p")
+            .text(`${uppercaseKey}:${value}`);
+        });
+
+    });
 }
 
 
