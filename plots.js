@@ -19,7 +19,7 @@ function DrawBarchart(sampleId){
     // console.log(`Drawbarchart(${sampleId})`);
 
    //reading in JSON data, verifying data in console
-    d3.json("samples.json"). then(data=>{
+    d3.json("./samples.json"). then(data=>{
         // console.log(data);
 
         let samples=data.samples;
@@ -77,7 +77,7 @@ function DrawBubbleChart(sampleId){
 
     //same procedure as bar chart for pulling out data
     // console.log(`DrawBubblechart (${sampleId})`);
-    d3.json("samples.json"). then(data=>{
+    d3.json("./samples.json"). then(data=>{
         // console.log(data);
 
     let samples=data.samples;
@@ -130,7 +130,7 @@ function showMetadata(sampleId){
     
 
     //pulling in sample data
-    d3.json("samples.json").then(data => {
+    d3.json("./samples.json").then(data => {
 
        
 
@@ -174,7 +174,7 @@ function InitDashboard()
     //getting a handle on the selDataset in the index.HTML 
     let selector = d3.select("#selDataset");
 
-    d3.json("samples.json").then(data=>{
+    d3.json("./samples.json").then(data=>{
 
         //data is the samples  json data but first we have to pull out the data we want
         
