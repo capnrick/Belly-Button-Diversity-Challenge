@@ -1,10 +1,10 @@
-console.log("This is plots.js")
+// console.log("This is plots.js")
 
 
 function optionChanged(id)
 
 {
-    console.log(`optionChanged(${id})`);
+    // console.log(`optionChanged(${id})`);
     
     DrawBarchart(id);
     DrawBubbleChart(id);
@@ -16,26 +16,26 @@ function optionChanged(id)
 //function stubs for each required chart/table
 function DrawBarchart(sampleId){
 
-    console.log(`Drawbarchart(${sampleId})`);
+    // console.log(`Drawbarchart(${sampleId})`);
 
    //reading in JSON data, verifying data in console
     d3.json("samples.json"). then(data=>{
-        console.log(data);
+        // console.log(data);
 
         let samples=data.samples;
         let resultsArray=samples.filter(s=>s.id===sampleId);
         let result=resultsArray[0];
         
-        console.log(result);
+        // console.log(result);
 
 
         let otu_ids=result.otu_ids;
         let otu_labels=result.otu_labels;
         let sample_values=result.sample_values;
 
-        console.log(otu_ids);
-        console.log(otu_labels);
-        console.log(sample_values);
+        // console.log(otu_ids);
+        // console.log(otu_labels);
+        // console.log(sample_values);
 
         let yTicks=otu_ids.slice(0,10).map(otuId=>`OTU ${otuId}`).reverse();
 
@@ -76,9 +76,9 @@ function DrawBubbleChart(sampleId){
 
 
     //same procedure as bar chart for pulling out data
-    console.log(`DrawBubblechart (${sampleId})`);
+    // console.log(`DrawBubblechart (${sampleId})`);
     d3.json("samples.json"). then(data=>{
-        console.log(data);
+        // console.log(data);
 
     let samples=data.samples;
     let resultsArray=samples.filter(s=>s.id===sampleId);
@@ -125,7 +125,7 @@ function DrawBubbleChart(sampleId){
 
 function showMetadata(sampleId){
 
-    console.log(`showMetadata(${sampleId})`);
+    // console.log(`showMetadata(${sampleId})`);
     
     
 
@@ -138,7 +138,7 @@ function showMetadata(sampleId){
 
     let metaData=data.metadata;
 
-    console.log (metaData);
+    // console.log (metaData);
 
 
     let resultArray=metaData.filter(s=>s.id===parseInt(sampleId));
@@ -147,8 +147,8 @@ function showMetadata(sampleId){
     //creating array with key value pairs
     let metaArray= Object.entries(result);
     
-    console.log('Meta array is:');
-    console.log(metaArray);
+    // console.log('Meta array is:');
+    // console.log(metaArray);
 
     
 
@@ -169,7 +169,7 @@ function showMetadata(sampleId){
 //this code taken from Dom's office hours session Dec 11th.
 function InitDashboard()
 {
-    console.log("Initializing Dashboard");
+    // console.log("Initializing Dashboard");
 
     //getting a handle on the selDataset in the index.HTML 
     let selector = d3.select("#selDataset");
@@ -179,7 +179,7 @@ function InitDashboard()
         //data is the samples  json data but first we have to pull out the data we want
         
         //take a look at verify the data is being read
-        console.log(data);
+        // console.log(data);
 
         //define object of only names
         let sampleNames=data.names;
@@ -194,8 +194,8 @@ function InitDashboard()
         //initializing dashboard with first value in array from JSONS
         let sampleId=sampleNames[0];
 
-        console.log("this is the sample Id at init")
-        console.log(sampleId)
+        // console.log("this is the sample Id at init")
+        // console.log(sampleId)
         DrawBarchart(sampleId);
         DrawBubbleChart(sampleId);
         showMetadata(sampleId);
